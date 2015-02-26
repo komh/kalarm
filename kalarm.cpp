@@ -124,6 +124,9 @@ void KAlarm::addItem()
         _listWidget->setItemWidget(item, itemWidget);
 
         _alarmQueue.add(itemWidget);
+
+        connect(itemWidget, SIGNAL(alarmEnabledToggled(bool)),
+                this, SLOT(itemWidgetAlarmEnabledToggled(bool)));
     }
 }
 
@@ -170,12 +173,29 @@ void KAlarm::deleteItem()
     QListWidgetItem *item = _listWidget->currentItem();
     if (item)
     {
-        _alarmQueue.remove(qobject_cast<KAlarmItemWidget *>
-                                (_listWidget->itemWidget(item)));
+        KAlarmItemWidget *w = qobject_cast<KAlarmItemWidget *>
+                                (_listWidget->itemWidget(item));
 
-        int row = _listWidget->currentRow();
+        // Remove a item widget from alarm queue
+        _alarmQueue.remove(w);
 
+        // Dissociate a item widget from a list widget item
         _listWidget->removeItemWidget(item);
-        delete _listWidget->takeItem(row);
+
+        // Disconnect signal
+        w->disconnect();
+
+        // Destroy a item widget
+        delete w;
+
+        // Destroy a list widget item
+        delete item;
     }
+}
+
+void KAlarm::itemWidgetAlarmEnabledToggled(bool enabled)
+{
+    // Update alarm if signalled and enabled
+    if (sender() && enabled)
+        _alarmQueue.modify(qobject_cast<KAlarmItemWidget *>(sender()));
 }

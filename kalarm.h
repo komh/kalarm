@@ -53,6 +53,8 @@ private slots:
     void addItem();
     void modifyItem();
     void deleteItem();
+
+    void itemWidgetAlarmEnabledToggled(bool enabled);
 };
 
 #endif // KALARM_H

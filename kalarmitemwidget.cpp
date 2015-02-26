@@ -36,6 +36,9 @@ KAlarmItemWidget::KAlarmItemWidget(QWidget *parent) : QWidget(parent)
     mainLayout->addWidget(_alarmConditionLabel, 4);
 
     setLayout(mainLayout);
+
+    connect(_alarmEnabledCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(alarmEnabledToggled(bool)));
 }
 
 KAlarmItemWidget::~KAlarmItemWidget()

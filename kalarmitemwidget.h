@@ -79,6 +79,9 @@ public:
 
     static KWeekDay numToWeekDay(int n);
 
+signals:
+    void alarmEnabledToggled(bool checked);
+
 private:
     QCheckBox *_alarmEnabledCheck;
     QString _name;
