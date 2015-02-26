@@ -96,6 +96,38 @@ KAlarmConfigDialog::~KAlarmConfigDialog()
 {
 
 }
+
+void KAlarmConfigDialog::accept()
+{
+    QString errorMsg;
+    QWidget *errorWidget = 0;
+
+    if (name().isEmpty())
+    {
+        errorMsg = tr("Please specify a name.");
+        errorWidget = _nameLine;
+    }
+    else if (isUseIntervalChecked() &&
+             intervalTime().hour() == 0 && intervalTime().minute() == 0)
+    {
+        errorMsg = tr("Please set an interval time(00:00 is not allowed).");
+        errorWidget = _intervalTimeEdit;
+    }
+
+    if (errorWidget)
+    {
+        QMessageBox msgBox;
+        msgBox.setText(errorMsg);
+        msgBox.exec();
+
+        errorWidget->setFocus();
+
+        return;
+    }
+
+    QDialog::accept();
+}
+
 QString KAlarmConfigDialog::name() const
 {
     return _nameLine->text();

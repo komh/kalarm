@@ -37,6 +37,8 @@ public:
     KAlarmConfigDialog(QWidget *parent = 0, Qt::WindowFlags f = 0);
     ~KAlarmConfigDialog();
 
+    void accept();
+
     QString name() const;
     void setName(const QString &name);
 
