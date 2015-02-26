@@ -49,7 +49,8 @@ public:
     enum KAlarmType
     {
         IntervalAlarm = 0,
-        WeeklyAlarm
+        WeeklyAlarm,
+        SingleShotAlarm
     };
 
     enum KWeekDay

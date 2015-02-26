@@ -152,19 +152,23 @@ void KAlarmQueue::timerTimeout()
         const KAlarmItemWidget *w(it.key());
         QDateTime dt(it.value());
 
-        // Update alarm
-        QDateTime nextAlarm(findNextAlarm(w, dt));
+        // Alarm if enabled
+        if (w->isAlarmEnabled())
+            alarm(w, currentDateTime);
 
-        if (nextAlarm == dt)        // Single shot ?
-            _alarmMap.remove(w);    // Then remove it
+        // Update alarm
+        if (w->alarmType() == KAlarmItemWidget::SingleShotAlarm)
+        {
+            // Remove single-shot alarm to prevent from alarming repeately
+            // until a minute is changed.
+            remove(w);
+
+            // Disable alarm if single-shot alarm
+            // FIXEME: implement this without const_cast !!!
+            const_cast<KAlarmItemWidget *>(w)->setAlarmEnabled(false);
+        }
         else
             _alarmMap.insert(w, findNextAlarm(w, dt));
-
-        // Skip not-enabled alarm
-        if (!w->isAlarmEnabled())
-            continue;
-
-        alarm(w, currentDateTime);
     }
 }
 

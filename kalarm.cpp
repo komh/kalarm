@@ -63,6 +63,48 @@ KAlarm::~KAlarm()
     delete ui;
 }
 
+static void configDialogToItemWidget(const KAlarmConfigDialog &configDialog,
+                                     KAlarmItemWidget *itemWidget)
+{
+    itemWidget->setName(configDialog.name());
+    itemWidget->setStartTime(QTime(configDialog.startTime().hour(),
+                                   configDialog.startTime().minute()));
+    itemWidget->setIntervalTime(QTime(configDialog.intervalTime().hour(),
+                                      configDialog.intervalTime().minute()));
+
+    itemWidget->setWeekDayEnabled(KAlarmItemWidget::Monday,
+                                  configDialog.isMondayChecked());
+
+    itemWidget->setWeekDayEnabled(KAlarmItemWidget::Tuesday,
+                                  configDialog.isTuesdayChecked());
+
+    itemWidget->setWeekDayEnabled(KAlarmItemWidget::Wednesday,
+                                  configDialog.isWednesdayChecked());
+
+    itemWidget->setWeekDayEnabled(KAlarmItemWidget::Thursday,
+                                  configDialog.isThursdayChecked());
+
+    itemWidget->setWeekDayEnabled(KAlarmItemWidget::Friday,
+                                  configDialog.isFridayChecked());
+
+    itemWidget->setWeekDayEnabled(KAlarmItemWidget::Saturday,
+                                  configDialog.isSaturdayChecked());
+
+    itemWidget->setWeekDayEnabled(KAlarmItemWidget::Sunday,
+                                  configDialog.isSundayChecked());
+
+    KAlarmItemWidget::KAlarmType alarmType;
+
+    if (configDialog.isUseIntervalChecked())
+        alarmType = KAlarmItemWidget::IntervalAlarm;
+    else if (itemWidget->weekDaysToString().isEmpty())
+        alarmType = KAlarmItemWidget::SingleShotAlarm;
+    else
+        alarmType = KAlarmItemWidget::WeeklyAlarm;
+
+    itemWidget->setAlarmType(alarmType);
+}
+
 void KAlarm::addItem()
 {
     KAlarmConfigDialog configDialog;
@@ -71,36 +113,7 @@ void KAlarm::addItem()
     {
         KAlarmItemWidget *itemWidget = new KAlarmItemWidget;
 
-        itemWidget->setName(configDialog.name());
-        itemWidget->setStartTime(QTime(configDialog.startTime().hour(),
-                                       configDialog.startTime().minute()));
-        itemWidget->setAlarmType(configDialog.isUseIntervalChecked()
-                                 ? KAlarmItemWidget::IntervalAlarm
-                                 : KAlarmItemWidget::WeeklyAlarm);
-        itemWidget->setIntervalTime(
-                    QTime(configDialog.intervalTime().hour(),
-                          configDialog.intervalTime().minute()));
-
-        if (configDialog.isMondayChecked())
-            itemWidget->setWeekDayEnabled(KAlarmItemWidget::Monday, true);
-
-        if (configDialog.isTuesdayChecked())
-            itemWidget->setWeekDayEnabled(KAlarmItemWidget::Tuesday, true);
-
-        if (configDialog.isWednesdayChecked())
-            itemWidget->setWeekDayEnabled(KAlarmItemWidget::Wednesday, true);
-
-        if (configDialog.isThursdayChecked())
-            itemWidget->setWeekDayEnabled(KAlarmItemWidget::Thursday, true);
-
-        if (configDialog.isFridayChecked())
-            itemWidget->setWeekDayEnabled(KAlarmItemWidget::Friday, true);
-
-        if (configDialog.isSaturdayChecked())
-            itemWidget->setWeekDayEnabled(KAlarmItemWidget::Saturday, true);
-
-        if (configDialog.isSundayChecked())
-            itemWidget->setWeekDayEnabled(KAlarmItemWidget::Sunday, true);
+        configDialogToItemWidget(configDialog, itemWidget);
 
         itemWidget->setAlarmEnabled(true);
 
@@ -146,36 +159,7 @@ void KAlarm::modifyItem()
 
     if (configDialog.exec() == QDialog::Accepted)
     {
-        itemWidget->setName(configDialog.name());
-        itemWidget->setStartTime(QTime(configDialog.startTime().hour(),
-                                       configDialog.startTime().minute()));
-        itemWidget->setAlarmType(configDialog.isUseIntervalChecked()
-                                 ? KAlarmItemWidget::IntervalAlarm
-                                 : KAlarmItemWidget::WeeklyAlarm);
-        itemWidget->setIntervalTime(
-                    QTime(configDialog.intervalTime().hour(),
-                          configDialog.intervalTime().minute()));
-
-        if (configDialog.isMondayChecked())
-            itemWidget->setWeekDayEnabled(KAlarmItemWidget::Monday, true);
-
-        if (configDialog.isTuesdayChecked())
-            itemWidget->setWeekDayEnabled(KAlarmItemWidget::Tuesday, true);
-
-        if (configDialog.isWednesdayChecked())
-            itemWidget->setWeekDayEnabled(KAlarmItemWidget::Wednesday, true);
-
-        if (configDialog.isThursdayChecked())
-            itemWidget->setWeekDayEnabled(KAlarmItemWidget::Thursday, true);
-
-        if (configDialog.isFridayChecked())
-            itemWidget->setWeekDayEnabled(KAlarmItemWidget::Friday, true);
-
-        if (configDialog.isSaturdayChecked())
-            itemWidget->setWeekDayEnabled(KAlarmItemWidget::Saturday, true);
-
-        if (configDialog.isSundayChecked())
-            itemWidget->setWeekDayEnabled(KAlarmItemWidget::Sunday, true);
+        configDialogToItemWidget(configDialog, itemWidget);
 
         _alarmQueue.modify(itemWidget);
     }
@@ -195,4 +179,3 @@ void KAlarm::deleteItem()
         delete _listWidget->takeItem(row);
     }
 }
-
