@@ -38,15 +38,16 @@ KAlarmConfigDialog::KAlarmConfigDialog(QWidget *parent, Qt::WindowFlags f)
     _intervalTimeLabel = new QLabel(tr("Interval time:"));
     _intervalTimeEdit = new QTimeEdit;
 
-    _mondayCheck = new QCheckBox(tr("Monday"));
-    _tuesdayCheck= new QCheckBox(tr("Tuesday"));
-    _wednesdayCheck = new QCheckBox(tr("Wednesday"));
-    _thursdayCheck = new QCheckBox(tr("Thursday"));
-    _fridayCheck = new QCheckBox(tr("Friday"));
-    _saturdayCheck = new QCheckBox(tr("Saturday"));
-    _sundayCheck = new QCheckBox(tr("Sunday"));
+    _mondayCheck = new QCheckBox(tr("MON"));
+    _tuesdayCheck= new QCheckBox(tr("TUE"));
+    _wednesdayCheck = new QCheckBox(tr("WED"));
+    _thursdayCheck = new QCheckBox(tr("THU"));
+    _fridayCheck = new QCheckBox(tr("FRI"));
+    _saturdayCheck = new QCheckBox(tr("SAT"));
+    _sundayCheck = new QCheckBox(tr("SUN"));
 
-    QVBoxLayout *repeatTimeLayout = new QVBoxLayout;
+
+    QHBoxLayout *repeatTimeLayout = new QHBoxLayout;
     repeatTimeLayout->addWidget(_mondayCheck);
     repeatTimeLayout->addWidget(_tuesdayCheck);
     repeatTimeLayout->addWidget(_wednesdayCheck);
