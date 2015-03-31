@@ -79,6 +79,24 @@ public:
 
     static KWeekDay numToWeekDay(int n);
 
+    bool showAlarmWindow() const;
+    void setShowAlarmWindow(bool show);
+
+    bool playSound() const;
+    void setPlaySound(bool play);
+
+    QString soundFile() const;
+    void setSoundFile(const QString &file);
+
+    bool execProgram() const;
+    void setExecProgram(bool execProgram);
+
+    QString execProgramName() const;
+    void setExecProgramName(const QString &execProgramName);
+
+    QString execProgramParams() const;
+    void setExecProgramParams(const QString &execProgramParams);
+
 signals:
     void alarmEnabledToggled(bool checked);
 
@@ -94,6 +112,14 @@ private:
 
     QTime _intervalTime;
     QMap<KWeekDay, bool> _weekDaysMap;
+
+    bool    _showAlarmWindow;
+    bool    _playSound;
+    QString _soundFile;
+
+    bool    _execProgram;
+    QString _execProgramName;
+    QString _execProgramParams;
 };
 
 #endif // KALARMITEMWIDGET_H

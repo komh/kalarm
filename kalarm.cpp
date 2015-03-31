@@ -103,6 +103,14 @@ static void configDialogToItemWidget(const KAlarmConfigDialog &configDialog,
         alarmType = KAlarmItemWidget::WeeklyAlarm;
 
     itemWidget->setAlarmType(alarmType);
+
+    itemWidget->setShowAlarmWindow(configDialog.isShowAlarmWindowChecked());
+    itemWidget->setPlaySound(configDialog.isPlaySoundChecked());
+    itemWidget->setSoundFile(configDialog.soundFile());
+
+    itemWidget->setExecProgram(configDialog.isExecProgramChecked());
+    itemWidget->setExecProgramName(configDialog.execProgramName());
+    itemWidget->setExecProgramParams(configDialog.execProgramParams());
 }
 
 void KAlarm::addItem()
@@ -159,6 +167,12 @@ void KAlarm::modifyItem()
                 itemWidget->isWeekDayEnabled(KAlarmItemWidget::Saturday));
     configDialog.setSundayChecked(
                 itemWidget->isWeekDayEnabled(KAlarmItemWidget::Sunday));
+    configDialog.setShowAlarmWindowChecked(itemWidget->showAlarmWindow());
+    configDialog.setPlaySoundChecked(itemWidget->playSound());
+    configDialog.setSoundFile(itemWidget->soundFile());
+    configDialog.setExecProgramChecked(itemWidget->execProgram());
+    configDialog.setExecProgramName(itemWidget->execProgramName());
+    configDialog.setExecProgramParams(itemWidget->execProgramParams());
 
     if (configDialog.exec() == QDialog::Accepted)
     {

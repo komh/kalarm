@@ -25,6 +25,7 @@
 #include "kalarmconfigdialog.h"
 
 #include <QtWidgets>
+#include <QSoundEffect>
 
 KAlarmConfigDialog::KAlarmConfigDialog(QWidget *parent, Qt::WindowFlags f)
     : QDialog(parent, f)
@@ -67,12 +68,47 @@ KAlarmConfigDialog::KAlarmConfigDialog(QWidget *parent, Qt::WindowFlags f)
     buttonLayout->addWidget(okButton);
     buttonLayout->addWidget(cancelButton);
 
+    _showAlarmWindowCheck = new QCheckBox(tr("Show an alarm window"));
+
+    _playSoundCheck = new QCheckBox(tr("Play sound"));
+    _soundFileLine = new QLineEdit;
+    _soundPlayPush = new QPushButton(tr("Play"));
+    _soundFileBrowsePush = new QPushButton(tr("Browse..."));
+
+    QHBoxLayout *soundFileLayout = new QHBoxLayout;
+    soundFileLayout->addWidget(_soundFileLine, 1);
+    soundFileLayout->addWidget(_soundPlayPush);
+    soundFileLayout->addWidget(_soundFileBrowsePush);
+
+    _execProgramCheck = new QCheckBox(tr("Execute a program"));
+    _execProgramNameLine = new QLineEdit;
+    _execProgramNameBrowsePush = new QPushButton(tr("Browse..."));
+    _execProgramParamsLabel = new QLabel(tr("Parameters for a program:"));
+    _execProgramParamsLine = new QLineEdit;
+
+    QHBoxLayout *execProgramLayout = new QHBoxLayout;
+    execProgramLayout->addWidget(_execProgramNameLine, 1);
+    execProgramLayout->addWidget(_execProgramNameBrowsePush);
+
+    QVBoxLayout *onAlarmLayout = new QVBoxLayout;
+    onAlarmLayout->addWidget(_showAlarmWindowCheck);
+    onAlarmLayout->addWidget(_playSoundCheck);
+    onAlarmLayout->addLayout(soundFileLayout);
+    onAlarmLayout->addWidget(_execProgramCheck);
+    onAlarmLayout->addLayout(execProgramLayout);
+    onAlarmLayout->addWidget(_execProgramParamsLabel);
+    onAlarmLayout->addWidget(_execProgramParamsLine);
+
+    _onAlarmGroup = new QGroupBox(tr("On alarm"));
+    _onAlarmGroup->setLayout(onAlarmLayout);
+
     QFormLayout *formLayout = new QFormLayout;
     formLayout->addRow(_nameLabel, _nameLine);
     formLayout->addRow(_startTimeLabel, _startTimeEdit);
     formLayout->addRow(_useIntervalCheck);
     formLayout->addRow(_intervalTimeLabel, _intervalTimeEdit);
     formLayout->addRow(_repeatTimeGroup);
+    formLayout->addRow(_onAlarmGroup);
     formLayout->addRow(buttonLayout);
 
     // Disable resizing of a dialog
@@ -85,10 +121,29 @@ KAlarmConfigDialog::KAlarmConfigDialog(QWidget *parent, Qt::WindowFlags f)
     _intervalTimeLabel->setEnabled(false);
     _intervalTimeEdit->setEnabled(false);
     _repeatTimeGroup->setEnabled(true);
+    _showAlarmWindowCheck->setChecked(true);
+    _playSoundCheck->setChecked(false);
+    _soundFileLine->setEnabled(false);
+    _soundPlayPush->setEnabled(false);
+    _soundFileBrowsePush->setEnabled(false);
+    _execProgramCheck->setChecked(false);
+    _execProgramNameLine->setEnabled(false);
+    _execProgramNameBrowsePush->setEnabled(false);
+    _execProgramParamsLabel->setEnabled(false);
+    _execProgramParamsLabel->setEnabled(false);
 
     // Connect signals
     connect(_useIntervalCheck, SIGNAL(stateChanged(int)),
             this, SLOT(useIntervalStateChanged(int)));
+    connect(_playSoundCheck, SIGNAL(stateChanged(int)),
+            this, SLOT(useSoundStateChanged(int)));
+    connect(_soundPlayPush, SIGNAL(clicked()), this, SLOT(playClicked()));
+    connect(_soundFileBrowsePush, SIGNAL(clicked()),
+            this, SLOT(browseClicked()));
+    connect(_execProgramCheck, SIGNAL(stateChanged(int)),
+            this, SLOT(execProgramStateChanged(int)));
+    connect(_execProgramNameBrowsePush, SIGNAL(clicked()),
+            this, SLOT(execProgramNameBrowseClicked()));
     connect(okButton, SIGNAL(clicked()), this, SLOT(accept()));
     connect(cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
 }
@@ -236,6 +291,63 @@ void KAlarmConfigDialog::setSundayChecked(bool checked)
 {
     _sundayCheck->setChecked(checked);
 }
+bool KAlarmConfigDialog::isShowAlarmWindowChecked() const
+{
+    return _showAlarmWindowCheck->isChecked();
+}
+
+void KAlarmConfigDialog::setShowAlarmWindowChecked(bool checked)
+{
+    _showAlarmWindowCheck->setChecked(checked);
+}
+
+bool KAlarmConfigDialog::isPlaySoundChecked() const
+{
+    return _playSoundCheck->isChecked();
+}
+
+void KAlarmConfigDialog::setPlaySoundChecked(bool checked)
+{
+    _playSoundCheck->setChecked(checked);
+}
+QString KAlarmConfigDialog::soundFile() const
+{
+    return _soundFileLine->text();
+}
+
+void KAlarmConfigDialog::setSoundFile(const QString &soundFile)
+{
+    _soundFileLine->setText(soundFile);
+}
+QString KAlarmConfigDialog::execProgramName() const
+{
+    return _execProgramNameLine->text();
+}
+
+void KAlarmConfigDialog::setExecProgramName(const QString &program)
+{
+    _execProgramNameLine->setText(program);
+}
+
+bool KAlarmConfigDialog::isExecProgramChecked() const
+{
+    return _execProgramCheck->isChecked();
+}
+
+void KAlarmConfigDialog::setExecProgramChecked(bool checked)
+{
+    _execProgramCheck->setChecked(checked);
+}
+
+QString KAlarmConfigDialog::execProgramParams() const
+{
+    return _execProgramParamsLine->text();
+}
+
+void KAlarmConfigDialog::setExecProgramParams(const QString &params)
+{
+    _execProgramParamsLine->setText(params);
+}
 
 void KAlarmConfigDialog::useIntervalStateChanged(int state)
 {
@@ -253,3 +365,83 @@ void KAlarmConfigDialog::useIntervalStateChanged(int state)
     }
 }
 
+void KAlarmConfigDialog::useSoundStateChanged(int state)
+{
+    bool enabled = state == Qt::Checked;
+
+    _soundFileLine->setEnabled(enabled);
+    _soundPlayPush->setEnabled(enabled);
+    _soundFileBrowsePush->setEnabled(enabled);
+}
+
+void KAlarmConfigDialog::playClicked()
+{
+    QSoundEffect effect;
+    effect.setSource(QUrl::fromLocalFile(_soundFileLine->text()));
+    // Source is not set ?
+    if (effect.status() == QSoundEffect::Null)
+        return;
+
+    effect.setLoopCount(1);
+    effect.setVolume(0.25f);
+
+    QEventLoop waitPlay;
+    connect(&effect, SIGNAL(statusChanged()), &waitPlay, SLOT(quit()));
+    effect.play();
+    // Wait for QSoundEffect::Error or QSoundEffect::Ready
+    waitPlay.exec();
+
+    if (effect.status() != QSoundEffect::Error)
+    {
+        QMessageBox msgBox;
+        connect(&effect, SIGNAL(playingChanged()), &msgBox, SLOT(reject()));
+        msgBox.setText(tr("Sound is playing..."));
+        msgBox.setStandardButtons(QMessageBox::Cancel);
+        msgBox.exec();
+    }
+    else
+        QMessageBox::warning(this, tr("KAlarm"), tr("Not playable"));
+}
+
+void KAlarmConfigDialog::browseClicked()
+{
+    QStringList filters;
+    filters << "WAV files (*.wav)";
+    filters << "All files (*)";
+
+    QFileDialog fileDlg(this);
+    fileDlg.setNameFilters(filters);
+    if (fileDlg.exec() == QDialog::Accepted)
+    {
+        QString soundFile(QDir::toNativeSeparators(
+                              fileDlg.selectedFiles().first()));
+
+        _soundFileLine->setText(soundFile);
+    }
+}
+
+void KAlarmConfigDialog::execProgramStateChanged(int state)
+{
+    bool enabled = state == Qt::Checked;
+
+    _execProgramNameLine->setEnabled(enabled);
+    _execProgramNameBrowsePush->setEnabled(enabled);
+    _execProgramParamsLabel->setEnabled(enabled);
+    _execProgramParamsLine->setEnabled(enabled);
+}
+
+void KAlarmConfigDialog::execProgramNameBrowseClicked()
+{
+    QStringList filters;
+    filters << "Executable files (*.exe; *.cmd; *.btm; *.com; *.bat)";
+    filters << "All files (*)";
+
+    QFileDialog fileDlg(this);
+    fileDlg.setNameFilters(filters);
+    if (fileDlg.exec() == QDialog::Accepted)
+    {
+        QString program(QDir::toNativeSeparators(
+                            fileDlg.selectedFiles().first()));
+        _execProgramNameLine->setText(program);
+    }
+}

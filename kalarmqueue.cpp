@@ -24,6 +24,8 @@
 
 #include "kalarmqueue.h"
 
+#include <QSoundEffect>
+
 KAlarmQueue::KAlarmQueue(QObject *parent) : QObject(parent)
 {
     connect(&_timer, SIGNAL(timeout()), this, SLOT(timerTimeout()));
@@ -95,6 +97,21 @@ QDateTime KAlarmQueue::findNextAlarm(const KAlarmItemWidget *w,
 
 void KAlarmQueue::alarm(const KAlarmItemWidget *w, const QDateTime &dt)
 {
+    QSoundEffect e;
+    if (w->playSound())
+    {
+        e.setSource(QUrl::fromLocalFile(w->soundFile()));
+        e.setLoopCount(QSoundEffect::Infinite);
+        e.setVolume(1.0f);
+        e.play();
+    }
+
+    if (w->execProgram())
+    {
+        QProcess::startDetached(w->execProgramName() + " " +
+                                w->execProgramParams());
+    }
+
     QString text;
     text.append("<p align=center>");
 

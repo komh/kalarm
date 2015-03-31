@@ -24,7 +24,11 @@
 
 #include "kalarmitemwidget.h"
 
-KAlarmItemWidget::KAlarmItemWidget(QWidget *parent) : QWidget(parent)
+KAlarmItemWidget::KAlarmItemWidget(QWidget *parent)
+    : QWidget(parent)
+    , _showAlarmWindow(true)
+    , _playSound(false)
+    , _execProgram(false)
 {
     _alarmEnabledCheck = new QCheckBox;
     _startTimeLabel = new QLabel;
@@ -150,3 +154,60 @@ KAlarmItemWidget::KWeekDay KAlarmItemWidget::numToWeekDay(int n)
     // 7 to Sunday
     return static_cast<KWeekDay>(n - 1);
 }
+bool KAlarmItemWidget::showAlarmWindow() const
+{
+    return _showAlarmWindow;
+}
+
+void KAlarmItemWidget::setShowAlarmWindow(bool show)
+{
+    _showAlarmWindow = show;
+}
+bool KAlarmItemWidget::playSound() const
+{
+    return _playSound;
+}
+
+void KAlarmItemWidget::setPlaySound(bool play)
+{
+    _playSound = play;
+}
+QString KAlarmItemWidget::soundFile() const
+{
+    return _soundFile;
+}
+
+void KAlarmItemWidget::setSoundFile(const QString &file)
+{
+    _soundFile = file;
+}
+bool KAlarmItemWidget::execProgram() const
+{
+    return _execProgram;
+}
+
+void KAlarmItemWidget::setExecProgram(bool execProgram)
+{
+    _execProgram = execProgram;
+}
+QString KAlarmItemWidget::execProgramName() const
+{
+    return _execProgramName;
+}
+
+void KAlarmItemWidget::setExecProgramName(const QString &execProgramName)
+{
+    _execProgramName = execProgramName;
+}
+QString KAlarmItemWidget::execProgramParams() const
+{
+    return _execProgramParams;
+}
+
+void KAlarmItemWidget::setExecProgramParams(const QString &execProgramParams)
+{
+    _execProgramParams = execProgramParams;
+}
+
+
+

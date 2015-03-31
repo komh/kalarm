@@ -72,25 +72,59 @@ public:
     bool isSundayChecked() const;
     void setSundayChecked(bool checked);
 
+    bool isShowAlarmWindowChecked() const;
+    void setShowAlarmWindowChecked(bool checked);
+
+    bool isPlaySoundChecked() const;
+    void setPlaySoundChecked(bool checked);
+
+    QString soundFile() const;
+    void setSoundFile(const QString &soundFile);
+
+    QString execProgramName() const;
+    void setExecProgramName(const QString &program);
+
+    bool isExecProgramChecked() const;
+    void setExecProgramChecked(bool checked);
+
+    QString execProgramParams() const;
+    void setExecProgramParams(const QString &params);
+
 private:
-    QLabel    *_nameLabel;
-    QLineEdit *_nameLine;
-    QLabel    *_startTimeLabel;
-    QTimeEdit *_startTimeEdit;
-    QCheckBox *_useIntervalCheck;
-    QLabel    *_intervalTimeLabel;
-    QTimeEdit *_intervalTimeEdit;
-    QCheckBox *_mondayCheck;
-    QCheckBox *_tuesdayCheck;
-    QCheckBox *_wednesdayCheck;
-    QCheckBox *_thursdayCheck;
-    QCheckBox *_fridayCheck;
-    QCheckBox *_saturdayCheck;
-    QCheckBox *_sundayCheck;
-    QGroupBox *_repeatTimeGroup;
+    QLabel      *_nameLabel;
+    QLineEdit   *_nameLine;
+    QLabel      *_startTimeLabel;
+    QTimeEdit   *_startTimeEdit;
+    QCheckBox   *_useIntervalCheck;
+    QLabel      *_intervalTimeLabel;
+    QTimeEdit   *_intervalTimeEdit;
+    QCheckBox   *_mondayCheck;
+    QCheckBox   *_tuesdayCheck;
+    QCheckBox   *_wednesdayCheck;
+    QCheckBox   *_thursdayCheck;
+    QCheckBox   *_fridayCheck;
+    QCheckBox   *_saturdayCheck;
+    QCheckBox   *_sundayCheck;
+    QGroupBox   *_repeatTimeGroup;
+    QCheckBox   *_showAlarmWindowCheck;
+    QCheckBox   *_playSoundCheck;
+    QLineEdit   *_soundFileLine;
+    QPushButton *_soundPlayPush;
+    QPushButton *_soundFileBrowsePush;
+    QCheckBox   *_execProgramCheck;
+    QLineEdit   *_execProgramNameLine;
+    QPushButton *_execProgramNameBrowsePush;
+    QLabel      *_execProgramParamsLabel;
+    QLineEdit   *_execProgramParamsLine;
+    QGroupBox   *_onAlarmGroup;
 
 private slots:
     void useIntervalStateChanged(int state);
+    void useSoundStateChanged(int state);
+    void playClicked();
+    void browseClicked();
+    void execProgramStateChanged(int state);
+    void execProgramNameBrowseClicked();
 };
 
 #endif // KALARMCONFIGDIALOG_H
