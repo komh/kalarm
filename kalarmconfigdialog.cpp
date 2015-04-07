@@ -172,7 +172,7 @@ void KAlarmConfigDialog::accept()
 
     if (errorWidget)
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox(this);
         msgBox.setText(errorMsg);
         msgBox.exec();
 
@@ -393,7 +393,7 @@ void KAlarmConfigDialog::playClicked()
 
     if (effect.status() != QSoundEffect::Error)
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox(this);
         connect(&effect, SIGNAL(playingChanged()), &msgBox, SLOT(reject()));
         msgBox.setText(tr("Sound is playing..."));
         msgBox.setStandardButtons(QMessageBox::Cancel);

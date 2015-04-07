@@ -115,7 +115,7 @@ static void configDialogToItemWidget(const KAlarmConfigDialog &configDialog,
 
 void KAlarm::addItem()
 {
-    KAlarmConfigDialog configDialog;
+    KAlarmConfigDialog configDialog(this);
 
     if (configDialog.exec() == QDialog::Accepted)
     {
@@ -140,7 +140,7 @@ void KAlarm::addItem()
 
 void KAlarm::modifyItem()
 {
-    KAlarmConfigDialog configDialog;
+    KAlarmConfigDialog configDialog(this);
 
     QListWidgetItem *item= _listWidget->currentItem();
     if (!item)
