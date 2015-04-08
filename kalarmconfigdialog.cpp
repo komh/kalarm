@@ -61,6 +61,8 @@ KAlarmConfigDialog::KAlarmConfigDialog(QWidget *parent, Qt::WindowFlags f)
     _repeatTimeGroup->setLayout(repeatTimeLayout);
 
     QPushButton *okButton = new QPushButton(tr("OK"));
+    okButton->setDefault(true); // Set OK button to a default button
+
     QPushButton *cancelButton = new QPushButton(tr("Cancel"));
 
     QHBoxLayout *buttonLayout = new QHBoxLayout;
