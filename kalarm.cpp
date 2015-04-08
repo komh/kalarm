@@ -56,6 +56,8 @@ KAlarm::KAlarm(QWidget *parent) :
     connect(addButton, SIGNAL(clicked()), this, SLOT(addItem()));
     connect(modifyButton, SIGNAL(clicked()), this, SLOT(modifyItem()));
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteItem()));
+    connect(_listWidget, SIGNAL(doubleClicked(QModelIndex)),
+            this, SLOT(modifyItem(QModelIndex)));
 }
 
 KAlarm::~KAlarm()
@@ -138,11 +140,17 @@ void KAlarm::addItem()
     }
 }
 
-void KAlarm::modifyItem()
+void KAlarm::modifyItem(const QModelIndex &index)
 {
     KAlarmConfigDialog configDialog(this);
 
-    QListWidgetItem *item= _listWidget->currentItem();
+    QListWidgetItem *item;
+
+    if (index.isValid())
+        item = _listWidget->item(index.row());
+    else
+        item = _listWidget->currentItem();
+
     if (!item)
         return;
 

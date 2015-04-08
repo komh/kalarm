@@ -51,7 +51,7 @@ private:
 
 private slots:
     void addItem();
-    void modifyItem();
+    void modifyItem(const QModelIndex &index = QModelIndex());
     void deleteItem();
 
     void itemWidgetAlarmEnabledToggled(bool enabled);
