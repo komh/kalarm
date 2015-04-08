@@ -43,6 +43,9 @@ public:
     explicit KAlarm(QWidget *parent = 0);
     ~KAlarm();
 
+protected:
+    bool event(QEvent *e);
+
 private:
     Ui::KAlarm *ui;
 

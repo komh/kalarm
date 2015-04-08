@@ -80,6 +80,32 @@ KAlarm::~KAlarm()
     delete ui;
 }
 
+bool KAlarm::event(QEvent *e)
+{
+    if (e->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *key = reinterpret_cast<QKeyEvent *>(e);
+
+        if (!(key->modifiers() & (Qt::ControlModifier | Qt::AltModifier)))
+        {
+            switch (key->key())
+            {
+                case Qt::Key_Insert:
+                    addItem();
+                    e->accept();
+                    return true;
+
+                case Qt::Key_Delete:
+                    deleteItem();
+                    e->accept();
+                    return true;
+            }
+        }
+    }
+
+    return QMainWindow::event(e);
+}
+
 static void configDialogToItemWidget(const KAlarmConfigDialog &configDialog,
                                      KAlarmItemWidget *itemWidget)
 {
