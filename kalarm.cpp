@@ -59,8 +59,8 @@ KAlarm::KAlarm(QWidget *parent) :
     _listWidget = new QListWidget;
 
     QVBoxLayout *vlayout = new QVBoxLayout;
-    vlayout->addLayout(buttonLayout);
     vlayout->addWidget(_listWidget);
+    vlayout->addLayout(buttonLayout);
 
     centralWidget()->setLayout(vlayout);
 
