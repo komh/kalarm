@@ -64,6 +64,10 @@ KAlarm::KAlarm(QWidget *parent) :
 
     centralWidget()->setLayout(vlayout);
 
+    // hide a toolbar and a status bar
+    ui->mainToolBar->hide();
+    statusBar()->hide();
+
     connect(addButton, SIGNAL(clicked()), this, SLOT(addItem()));
     connect(modifyButton, SIGNAL(clicked()), this, SLOT(modifyItem()));
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteItem()));
