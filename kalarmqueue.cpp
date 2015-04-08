@@ -64,11 +64,11 @@ QDateTime KAlarmQueue::findNextAlarm(const KAlarmItemWidget *w,
 
     QDateTime nextAlarm(dt);
 
-    if (inclusive && nextAlarm >= current)
-        return nextAlarm;
-
     if (w->alarmType() == KAlarmItemWidget::IntervalAlarm)
     {
+        if (inclusive && nextAlarm >= current)
+            return nextAlarm;
+
         while (nextAlarm <= current)
         {
             if (inclusive && nextAlarm == current)
@@ -80,6 +80,12 @@ QDateTime KAlarmQueue::findNextAlarm(const KAlarmItemWidget *w,
     }
     else if (w->alarmType() == KAlarmItemWidget::WeeklyAlarm)
     {
+        if (inclusive
+                && w->isWeekDayEnabled(
+                    w->numToWeekDay(nextAlarm.date().dayOfWeek()))
+                && nextAlarm >= current)
+            return nextAlarm;
+
         for (int days = 1; days <= 7; ++days)
         {
             int dayOfWeek = nextAlarm.addDays(days).date().dayOfWeek();
