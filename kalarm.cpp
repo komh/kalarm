@@ -36,6 +36,17 @@ KAlarm::KAlarm(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    _fileMenu = menuBar()->addMenu(tr("&File"));
+    _fileMenu->addAction(tr("&New alarm..."), this, SLOT(addItem()),
+                         QKeySequence::New);
+    _fileMenu->addSeparator();
+    _fileMenu->addAction(tr("E&xit"), this, SLOT(close()),
+                         QKeySequence(tr("Ctrl+Q")));
+
+    _helpMenu = menuBar()->addMenu(tr("&Help"));
+    _helpMenu->addAction(tr("&About..."), this, SLOT(about()));
+    _helpMenu->addAction(tr("About &Qt..."), this, SLOT(aboutQt()));
+
     QPushButton *addButton = new QPushButton(tr("&Add"));
     QPushButton *modifyButton = new  QPushButton(tr("&Modify"));
     QPushButton *deleteButton = new QPushButton(tr("&Delete"));
@@ -220,4 +231,27 @@ void KAlarm::itemWidgetAlarmEnabledToggled(bool enabled)
     // Update alarm if signalled and enabled
     if (sender() && enabled)
         _alarmQueue.modify(qobject_cast<KAlarmItemWidget *>(sender()));
+}
+
+void KAlarm::about()
+{
+    QMessageBox::about( this, tr("About K Alarm"), tr(
+"<h2>K Alarm %1</h2>"
+"<p>Copyright &copy; 2015 by KO Myung-Hun "
+"<a href=mailto:komh@chollian.net>&lt;komh@chollian.net&gt;</a>"
+"<p>K Alarm is a program to alarm one time, at regular intervals or weekly."
+"<p>If you want to promote to develop this program, then donate at the below "
+"web page, please."
+"<p align=center><a href=http://www.ecomstation.co.kr/komh/donate.html>"
+"http://www.ecomstation.co.kr/komh/donate.html</a>"
+"<p>This program comes with ABSOLUTELY NO WARRANTY. This is free software, "
+"and you are welcome to redistribute it under certain conditions. See "
+"<a href=http://www.gnu.org/licenses/gpl.html>the GPL v3 license</a> "
+"for details."
+                            ).arg(version()));
+}
+
+void KAlarm::aboutQt()
+{
+    QMessageBox::aboutQt(this);
 }

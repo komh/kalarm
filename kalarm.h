@@ -49,12 +49,20 @@ private:
     QListWidget *_listWidget;
     KAlarmQueue _alarmQueue;
 
+    QMenu *_fileMenu;
+    QMenu *_helpMenu;
+
 private slots:
     void addItem();
     void modifyItem(const QModelIndex &index = QModelIndex());
     void deleteItem();
 
     void itemWidgetAlarmEnabledToggled(bool enabled);
+
+    void about();
+    void aboutQt();
+
+    QString version() const { return tr("1.0.0"); }
 };
 
 #endif // KALARM_H
