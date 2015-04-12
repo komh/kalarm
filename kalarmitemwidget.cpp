@@ -89,10 +89,39 @@ KAlarmItemWidget::KAlarmType KAlarmItemWidget::alarmType() const
     return _alarmType;
 }
 
+/* Should be called after interval time is set and weekdays are enabled */
 void KAlarmItemWidget::setAlarmType(
         const KAlarmItemWidget::KAlarmType &alarmType)
 {
     _alarmType = alarmType;
+
+    switch (_alarmType)
+    {
+    case IntervalAlarm:
+    {
+        QString s;
+
+        if (_intervalTime.hour() != 0)
+        {
+            s.append(tr("%1 hour").arg(_intervalTime.toString("H")));
+            s.append(" ");
+        }
+
+        if (_intervalTime.minute() != 0)
+            s.append(tr("%1 minute").arg(_intervalTime.toString("m")));
+
+        _alarmConditionLabel->setText(tr("every %1").arg(s));
+        break;
+    }
+    case WeeklyAlarm:
+        _alarmConditionLabel->setText(weekDaysToString());
+        break;
+
+    case SingleShotAlarm:
+    default:
+        _alarmConditionLabel->setText(tr("Single shot"));
+        break;
+    }
 }
 
 QTime KAlarmItemWidget::intervalTime() const
@@ -115,8 +144,6 @@ void KAlarmItemWidget::setWeekDayEnabled(KAlarmItemWidget::KWeekDay weekDay,
                                          bool enabled)
 {
     _weekDaysMap.insert(weekDay, enabled);
-
-    _alarmConditionLabel->setText(weekDaysToString());
 }
 
 QString KAlarmItemWidget::weekDaysToString() const
@@ -247,7 +274,6 @@ void KAlarmItemWidget::loadAlarm(int index)
     setAlarmEnabled(settings.value("AlarmEnabled").toBool());
     setName(settings.value("Name").toString());
     setStartTime(settings.value("StartTime").toTime());
-    setAlarmType(static_cast<KAlarmType>(settings.value("AlarmType").toInt()));
     setIntervalTime(settings.value("IntervalTime").toTime());
 
     settings.beginGroup("Weekdays");
@@ -256,6 +282,7 @@ void KAlarmItemWidget::loadAlarm(int index)
                           settings.value(QString::number(day)).toBool());
     settings.endGroup();
 
+    setAlarmType(static_cast<KAlarmType>(settings.value("AlarmType").toInt()));
     setShowAlarmWindow(settings.value("ShowAlarmWindow").toBool());
     setPlaySound(settings.value("PlaySound").toBool());
     setSoundFile(settings.value("SoundFile").toString());

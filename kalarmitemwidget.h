@@ -67,6 +67,7 @@ public:
     };
 
     KAlarmType alarmType() const;
+    /* Should be called after interval time is set and weekdays are enabled */
     void setAlarmType(const KAlarmType &alarmType);
 
     QTime intervalTime() const;
