@@ -282,6 +282,8 @@ void KAlarm::saveAlarmItems() const
 {
     QSettings settings;
 
+    settings.setValue("MainWindowGeometry", saveGeometry());
+
     int count = _listWidget->count();
     settings.setValue("AlarmCount", count);
 
@@ -295,6 +297,8 @@ void KAlarm::saveAlarmItems() const
 void KAlarm::loadAlarmItems()
 {
     QSettings settings;
+
+    restoreGeometry(settings.value("MainWindowGeometry").toByteArray());
 
     int count = settings.value("AlarmCount").toInt();
     for (int i = 0; i < count; ++i)
