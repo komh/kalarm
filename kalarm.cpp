@@ -25,6 +25,7 @@
 #include "kalarm.h"
 #include "ui_kalarm.h"
 
+#include <QtCore>
 #include <QtWidgets>
 
 #include "kalarmconfigdialog.h"
@@ -73,10 +74,18 @@ KAlarm::KAlarm(QWidget *parent) :
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteItem()));
     connect(_listWidget, SIGNAL(doubleClicked(QModelIndex)),
             this, SLOT(modifyItem(QModelIndex)));
+
+    // Default settings for QSettings
+    QCoreApplication::setOrganizationName(organization());
+    QCoreApplication::setApplicationName(title());
+
+    loadAlarmItems();
 }
 
 KAlarm::~KAlarm()
 {
+    saveAlarmItems();
+
     delete ui;
 }
 
@@ -178,6 +187,8 @@ void KAlarm::addItem()
 
         connect(itemWidget, SIGNAL(alarmEnabledToggled(bool)),
                 this, SLOT(itemWidgetAlarmEnabledToggled(bool)));
+
+        saveAlarmItems();
     }
 }
 
@@ -228,6 +239,8 @@ void KAlarm::modifyItem(const QModelIndex &index)
         configDialogToItemWidget(configDialog, itemWidget);
 
         _alarmQueue.modify(itemWidget);
+
+        saveAlarmItems();
     }
 }
 
@@ -253,6 +266,8 @@ void KAlarm::deleteItem()
 
         // Destroy a list widget item
         delete item;
+
+        saveAlarmItems();
     }
 }
 
@@ -261,6 +276,44 @@ void KAlarm::itemWidgetAlarmEnabledToggled(bool enabled)
     // Update alarm if signalled and enabled
     if (sender() && enabled)
         _alarmQueue.modify(qobject_cast<KAlarmItemWidget *>(sender()));
+}
+
+void KAlarm::saveAlarmItems() const
+{
+    QSettings settings;
+
+    int count = _listWidget->count();
+    settings.setValue("AlarmCount", count);
+
+    for (int i = 0; i < count; ++i)
+    {
+        qobject_cast<KAlarmItemWidget *>
+                (_listWidget->itemWidget(_listWidget->item(i)))->saveAlarm(i);
+    }
+}
+
+void KAlarm::loadAlarmItems()
+{
+    QSettings settings;
+
+    int count = settings.value("AlarmCount").toInt();
+    for (int i = 0; i < count; ++i)
+    {
+        KAlarmItemWidget *itemWidget = new KAlarmItemWidget;
+
+        itemWidget->loadAlarm(i);
+
+        QListWidgetItem *item = new QListWidgetItem;
+        item->setSizeHint(QSize(itemWidget->sizeHint()));
+
+        _listWidget->addItem(item);
+        _listWidget->setItemWidget(item, itemWidget);
+
+        _alarmQueue.add(itemWidget);
+
+        connect(itemWidget, SIGNAL(alarmEnabledToggled(bool)),
+                this, SLOT(itemWidgetAlarmEnabledToggled(bool)));
+    }
 }
 
 void KAlarm::about()

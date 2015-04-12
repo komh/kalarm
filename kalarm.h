@@ -62,9 +62,14 @@ private slots:
 
     void itemWidgetAlarmEnabledToggled(bool enabled);
 
+    void saveAlarmItems() const;
+    void loadAlarmItems();
+
     void about();
     void aboutQt();
 
+    QString organization() const { return tr("KO Myung-Hun"); }
+    QString title() const { return tr("K Alarm"); }
     QString version() const { return tr("1.0.0"); }
 };
 

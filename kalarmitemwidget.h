@@ -97,6 +97,9 @@ public:
     QString execProgramParams() const;
     void setExecProgramParams(const QString &execProgramParams);
 
+    void saveAlarm(int index) const;
+    void loadAlarm(int index);
+
 signals:
     void alarmEnabledToggled(bool checked);
 

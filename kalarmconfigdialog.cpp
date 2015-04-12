@@ -411,14 +411,19 @@ void KAlarmConfigDialog::browseClicked()
     filters << "WAV files (*.wav)";
     filters << "All files (*)";
 
+    QSettings settings;
+
     QFileDialog fileDlg(this);
     fileDlg.setNameFilters(filters);
+    fileDlg.setDirectory(settings.value("LastSoundDirectory").toString());
     if (fileDlg.exec() == QDialog::Accepted)
     {
         QString soundFile(QDir::toNativeSeparators(
                               fileDlg.selectedFiles().first()));
 
         _soundFileLine->setText(soundFile);
+
+        settings.setValue("LastSoundDirectory", fileDlg.directory().path());
     }
 }
 
@@ -438,12 +443,19 @@ void KAlarmConfigDialog::execProgramNameBrowseClicked()
     filters << "Executable files (*.exe; *.cmd; *.btm; *.com; *.bat)";
     filters << "All files (*)";
 
+    QSettings settings;
+
     QFileDialog fileDlg(this);
     fileDlg.setNameFilters(filters);
+    fileDlg.setDirectory(settings.value("LastExecuteProgramDirectory")
+                         .toString());
     if (fileDlg.exec() == QDialog::Accepted)
     {
         QString program(QDir::toNativeSeparators(
                             fileDlg.selectedFiles().first()));
         _execProgramNameLine->setText(program);
+
+        settings.setValue("LastExecuteProgramDirectory",
+                          fileDlg.directory().path());
     }
 }

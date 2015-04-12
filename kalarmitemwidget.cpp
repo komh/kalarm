@@ -209,5 +209,58 @@ void KAlarmItemWidget::setExecProgramParams(const QString &execProgramParams)
     _execProgramParams = execProgramParams;
 }
 
+void KAlarmItemWidget::saveAlarm(int index) const
+{
+    QString widgetId(QString("Widget%1").arg(index));
 
+    QSettings settings;
 
+    settings.beginGroup(widgetId);
+    settings.setValue("AlarmEnabled", isAlarmEnabled());
+    settings.setValue("Name", name());
+    settings.setValue("StartTime", startTime());
+    settings.setValue("AlarmType", alarmType());
+    settings.setValue("IntervalTime", intervalTime());
+
+    settings.beginGroup("Weekdays");
+    for (int day = 1; day <= 7; ++day)
+        settings.setValue(QString::number(day),
+                          isWeekDayEnabled(numToWeekDay(day)));
+    settings.endGroup();
+
+    settings.setValue("ShowAlarmWindow", showAlarmWindow());
+    settings.setValue("PlaySound", playSound());
+    settings.setValue("SoundFile", soundFile());
+    settings.setValue("ExecuteProgram", execProgram());
+    settings.setValue("ExecuteProgramName", execProgramName());
+    settings.setValue("ExcuteProgramParameters", execProgramParams());
+    settings.endGroup();
+}
+
+void KAlarmItemWidget::loadAlarm(int index)
+{
+    QString widgetId(QString("Widget%1").arg(index));
+
+    QSettings settings;
+
+    settings.beginGroup(widgetId);
+    setAlarmEnabled(settings.value("AlarmEnabled").toBool());
+    setName(settings.value("Name").toString());
+    setStartTime(settings.value("StartTime").toTime());
+    setAlarmType(static_cast<KAlarmType>(settings.value("AlarmType").toInt()));
+    setIntervalTime(settings.value("IntervalTime").toTime());
+
+    settings.beginGroup("Weekdays");
+    for (int day = 1; day <= 7; ++day)
+        setWeekDayEnabled(numToWeekDay(day),
+                          settings.value(QString::number(day)).toBool());
+    settings.endGroup();
+
+    setShowAlarmWindow(settings.value("ShowAlarmWindow").toBool());
+    setPlaySound(settings.value("PlaySound").toBool());
+    setSoundFile(settings.value("SoundFile").toString());
+    setExecProgram(settings.value("ExecuteProgram").toBool());
+    setExecProgramName(settings.value("ExecuteProgramName").toString());
+    setExecProgramParams(settings.value("ExecuteProgramParameters").toString());
+    settings.endGroup();
+}
