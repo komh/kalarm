@@ -131,18 +131,25 @@ void KAlarmQueue::alarm(const KAlarmItemWidget *w, const QDateTime &dt)
 
     text.append("</p>");
 
-    QMessageBox msgBox;
-    msgBox.setText(text);
+    QMessageBox *msgBox = new QMessageBox;
+    msgBox->setModal(false);
+    msgBox->setAttribute(Qt::WA_DeleteOnClose);
+    msgBox->setText(text);
 
     // Resize a message box, minimum width of 320
     QSpacerItem* hspacer = new QSpacerItem(320, 0,
                                            QSizePolicy::Minimum,
                                            QSizePolicy::Expanding);
 
-    QGridLayout* layout = qobject_cast<QGridLayout *>(msgBox.layout());
+    QGridLayout* layout = qobject_cast<QGridLayout *>(msgBox->layout());
     layout->addItem(hspacer, layout->rowCount(), 0, 1, layout->columnCount());
 
-    msgBox.exec();
+    msgBox->show();
+    // Activate a message box.
+    // If not activated, change the color of  a task bar entry.
+    msgBox->activateWindow();
+    // Ensure that a message box is stacked on top.
+    msgBox->raise();
 }
 
 void KAlarmQueue::timerTimeout()
