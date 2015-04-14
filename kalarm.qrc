@@ -1,5 +1,11 @@
 <RCC>
     <qresource prefix="/">
         <file>icons/candy_clock_16.png</file>
+        <file>icons/candy_clock_24.png</file>
+        <file>icons/candy_clock_32.png</file>
+        <file>icons/candy_clock_48.png</file>
+        <file>icons/candy_clock_64.png</file>
+        <file>icons/candy_clock_128.png</file>
+        <file>icons/candy_clock_256.png</file>
     </qresource>
 </RCC>

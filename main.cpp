@@ -28,6 +28,17 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    QIcon icon;
+    icon.addFile(":/icons/candy_clock_16.png");
+    icon.addFile(":/icons/candy_clock_24.png");
+    icon.addFile(":/icons/candy_clock_32.png");
+    icon.addFile(":/icons/candy_clock_48.png");
+    icon.addFile(":/icons/candy_clock_64.png");
+    icon.addFile(":/icons/candy_clock_128.png");
+    icon.addFile(":/icons/candy_clock_256.png");
+    QApplication::setWindowIcon(icon);
+
     QApplication::setQuitOnLastWindowClosed(false);
 
     KAlarm w;
