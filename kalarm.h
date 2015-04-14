@@ -45,6 +45,7 @@ public:
 
 protected:
     bool event(QEvent *e);
+    void closeEvent(QCloseEvent *e);
 
 private:
     Ui::KAlarm *ui;
@@ -54,6 +55,9 @@ private:
 
     QMenu *_fileMenu;
     QMenu *_helpMenu;
+
+    QMenu *_trayIconMenu;
+    QSystemTrayIcon *_trayIcon;
 
 private slots:
     void addItem();
@@ -67,6 +71,9 @@ private slots:
 
     void about();
     void aboutQt();
+
+    void openKAlarm();
+    void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
 
     QString organization() const { return tr("KO Myung-Hun"); }
     QString title() const { return tr("K Alarm"); }

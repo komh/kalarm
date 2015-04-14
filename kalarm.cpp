@@ -41,7 +41,7 @@ KAlarm::KAlarm(QWidget *parent) :
     _fileMenu->addAction(tr("&New alarm..."), this, SLOT(addItem()),
                          QKeySequence::New);
     _fileMenu->addSeparator();
-    _fileMenu->addAction(tr("E&xit"), this, SLOT(close()),
+    _fileMenu->addAction(tr("E&xit"), qApp, SLOT(quit()),
                          QKeySequence(tr("Ctrl+Q")));
 
     _helpMenu = menuBar()->addMenu(tr("&Help"));
@@ -69,11 +69,26 @@ KAlarm::KAlarm(QWidget *parent) :
     ui->mainToolBar->hide();
     statusBar()->hide();
 
+    _trayIconMenu = new QMenu;
+    _trayIconMenu->addAction(tr("&Open KAlarm..."), this, SLOT(openKAlarm()));
+    _trayIconMenu->addMenu(_helpMenu);
+    _trayIconMenu->addSeparator();
+    _trayIconMenu->addAction(tr("E&xit"), qApp, SLOT(quit()));
+
+    _trayIcon = new QSystemTrayIcon;
+    _trayIcon->setToolTip(title());
+    _trayIcon->setContextMenu(_trayIconMenu);
+    _trayIcon->setIcon(QIcon(":/icons/candy_clock_16.png"));
+
     connect(addButton, SIGNAL(clicked()), this, SLOT(addItem()));
     connect(modifyButton, SIGNAL(clicked()), this, SLOT(modifyItem()));
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteItem()));
     connect(_listWidget, SIGNAL(doubleClicked(QModelIndex)),
             this, SLOT(modifyItem(QModelIndex)));
+    connect(_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+            this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
+
+    _trayIcon->show();
 
     // Default settings for QSettings
     QCoreApplication::setOrganizationName(organization());
@@ -84,6 +99,8 @@ KAlarm::KAlarm(QWidget *parent) :
 
 KAlarm::~KAlarm()
 {
+    delete _trayIcon;
+
     saveAlarmItems();
 
     delete ui;
@@ -113,6 +130,12 @@ bool KAlarm::event(QEvent *e)
     }
 
     return QMainWindow::event(e);
+}
+
+void KAlarm::closeEvent(QCloseEvent *e)
+{
+    hide();
+    e->ignore();
 }
 
 static void configDialogToItemWidget(const KAlarmConfigDialog &configDialog,
@@ -341,4 +364,17 @@ void KAlarm::about()
 void KAlarm::aboutQt()
 {
     QMessageBox::aboutQt(this);
+}
+
+void KAlarm::openKAlarm()
+{
+    show();
+    activateWindow();
+    raise();
+}
+
+void KAlarm::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    if (reason == QSystemTrayIcon::DoubleClick)
+        openKAlarm();
 }

@@ -24,3 +24,6 @@ HEADERS  += kalarm.h \
     kalarmqueue.h
 
 FORMS    += kalarm.ui
+
+RESOURCES += \
+    kalarm.qrc

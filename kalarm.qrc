@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/candy_clock_16.png</file>
+    </qresource>
+</RCC>
