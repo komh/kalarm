@@ -45,7 +45,7 @@ KAlarm::KAlarm(QWidget *parent) :
                          QKeySequence(tr("Ctrl+Q")));
 
     _helpMenu = menuBar()->addMenu(tr("&Help"));
-    _helpMenu->addAction(tr("&About..."), this, SLOT(about()));
+    _helpMenu->addAction(tr("&About %1...").arg(title()), this, SLOT(about()));
     _helpMenu->addAction(tr("About &Qt..."), this, SLOT(aboutQt()));
 
     QPushButton *addButton = new QPushButton(tr("&Add"));
@@ -70,7 +70,8 @@ KAlarm::KAlarm(QWidget *parent) :
     statusBar()->hide();
 
     _trayIconMenu = new QMenu;
-    _trayIconMenu->addAction(tr("&Open KAlarm..."), this, SLOT(openKAlarm()));
+    _trayIconMenu->addAction(tr("&Open %1...").arg(title()),
+                             this, SLOT(openKAlarm()));
     _trayIconMenu->addMenu(_helpMenu);
     _trayIconMenu->addSeparator();
     _trayIconMenu->addAction(tr("E&xit"), qApp, SLOT(quit()));
@@ -342,8 +343,8 @@ void KAlarm::loadAlarmItems()
 void KAlarm::about()
 {
     QMessageBox::about( this, tr("About K Alarm"), tr(
-"<h2>K Alarm %1</h2>"
-"<p>Copyright &copy; 2015 by KO Myung-Hun "
+"<h2>%1 %2</h2>"
+"<p>Copyright &copy; 2015 by %3 "
 "<a href=mailto:komh@chollian.net>&lt;komh@chollian.net&gt;</a>"
 "<p>K Alarm is a program to alarm one time, at regular intervals or weekly."
 "<p>If you want to promote to develop this program, then donate at the below "
@@ -354,7 +355,7 @@ void KAlarm::about()
 "and you are welcome to redistribute it under certain conditions. See "
 "<a href=http://www.gnu.org/licenses/gpl.html>the GPL v3 license</a> "
 "for details."
-                            ).arg(version()));
+                            ).arg(title()).arg(version()).arg(organization()));
 }
 
 void KAlarm::aboutQt()
