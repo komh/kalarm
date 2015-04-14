@@ -43,6 +43,10 @@ public:
     explicit KAlarm(QWidget *parent = 0);
     ~KAlarm();
 
+    static QString organization() { return tr("KO Myung-Hun"); }
+    static QString title() { return tr("K Alarm"); }
+    static QString version() { return tr("1.0.0"); }
+
 protected:
     bool event(QEvent *e);
     void closeEvent(QCloseEvent *e);
@@ -74,10 +78,6 @@ private slots:
 
     void openKAlarm();
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
-
-    QString organization() const { return tr("KO Myung-Hun"); }
-    QString title() const { return tr("K Alarm"); }
-    QString version() const { return tr("1.0.0"); }
 };
 
 #endif // KALARM_H

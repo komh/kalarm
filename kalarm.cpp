@@ -90,10 +90,6 @@ KAlarm::KAlarm(QWidget *parent) :
 
     _trayIcon->show();
 
-    // Default settings for QSettings
-    QCoreApplication::setOrganizationName(organization());
-    QCoreApplication::setApplicationName(title());
-
     loadAlarmItems();
 }
 

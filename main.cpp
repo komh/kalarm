@@ -29,6 +29,10 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+    // Default settings for QSettings
+    QCoreApplication::setOrganizationName(KAlarm::organization());
+    QCoreApplication::setApplicationName(KAlarm::title());
+
     QIcon icon;
     icon.addFile(":/icons/candy_clock_16.png");
     icon.addFile(":/icons/candy_clock_24.png");
