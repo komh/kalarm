@@ -295,9 +295,14 @@ void KAlarm::deleteItem()
 
 void KAlarm::itemWidgetAlarmEnabledToggled(bool enabled)
 {
-    // Update alarm if signalled and enabled
-    if (sender() && enabled)
-        _alarmQueue.modify(qobject_cast<KAlarmItemWidget *>(sender()));
+    if (sender())
+    {
+        // Update alarm if signalled and enabled
+        if (enabled)
+            _alarmQueue.modify(qobject_cast<KAlarmItemWidget *>(sender()));
+
+        saveAlarmItems();
+    }
 }
 
 void KAlarm::saveAlarmItems() const
