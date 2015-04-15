@@ -27,3 +27,8 @@ FORMS    += kalarm.ui
 
 RESOURCES += \
     kalarm.qrc
+
+win32: RC_ICONS = kalarm_win32.ico
+
+DISTFILES += \
+    kalarm_win32.ico
