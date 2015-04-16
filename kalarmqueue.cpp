@@ -24,7 +24,9 @@
 
 #include "kalarmqueue.h"
 
+#ifdef CONFIG_QT5
 #include <QSoundEffect>
+#endif
 
 KAlarmQueue::KAlarmQueue(QObject *parent) : QObject(parent)
 {
@@ -103,6 +105,7 @@ QDateTime KAlarmQueue::findNextAlarm(const KAlarmItemWidget *w,
 
 void KAlarmQueue::alarm(const KAlarmItemWidget *w, const QDateTime &dt)
 {
+#ifdef CONFIG_QT5
     QSoundEffect e;
     if (w->playSound())
     {
@@ -111,6 +114,14 @@ void KAlarmQueue::alarm(const KAlarmItemWidget *w, const QDateTime &dt)
         e.setVolume(1.0f);
         e.play();
     }
+#else
+    QSound *sound = new QSound(w->soundFile());
+    if (w->playSound())
+    {
+        sound->setLoops(-1);
+        sound->play(w->soundFile());
+    }
+#endif
 
     if (w->execProgram())
     {
@@ -135,6 +146,10 @@ void KAlarmQueue::alarm(const KAlarmItemWidget *w, const QDateTime &dt)
     msgBox->setModal(false);
     msgBox->setAttribute(Qt::WA_DeleteOnClose);
     msgBox->setText(text);
+
+#ifndef CONFIG_QT5
+    connect(msgBox, SIGNAL(destroyed()), sound, SLOT(deleteLater()));
+#endif
 
     // Resize a message box, minimum width of 320
     QSpacerItem* hspacer = new QSpacerItem(320, 0,

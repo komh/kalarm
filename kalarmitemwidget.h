@@ -28,7 +28,11 @@
 #include <QWidget>
 
 #include <QtCore>
+#ifdef CONFIG_QT5
 #include <QtWidgets>
+#else
+#include <QtGui>
+#endif
 
 class KAlarmItemWidget : public QWidget
 {

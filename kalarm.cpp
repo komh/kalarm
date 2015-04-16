@@ -26,7 +26,11 @@
 #include "ui_kalarm.h"
 
 #include <QtCore>
+#ifdef CONFIG_QT5
 #include <QtWidgets>
+#else
+#include <QtGui>
+#endif
 
 #include "kalarmconfigdialog.h"
 #include "kalarmitemwidget.h"

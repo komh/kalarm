@@ -24,8 +24,12 @@
 
 #include "kalarmconfigdialog.h"
 
+#ifdef CONFIG_QT5
 #include <QtWidgets>
 #include <QSoundEffect>
+#else
+#include <QtGui>
+#endif
 
 KAlarmConfigDialog::KAlarmConfigDialog(QWidget *parent, Qt::WindowFlags f)
     : QDialog(parent, f)
@@ -376,8 +380,23 @@ void KAlarmConfigDialog::useSoundStateChanged(int state)
     _soundFileBrowsePush->setEnabled(enabled);
 }
 
+#ifndef CONFIG_QT5
+// FIXME: Ugly.
+class Sleep : public QThread
+{
+public:
+    static void msleep(unsigned long msecs)
+    {
+        QThread::msleep(msecs);
+    }
+};
+#endif
+
 void KAlarmConfigDialog::playClicked()
 {
+    static QString playingMsg(tr("Playing sound..."));
+
+#ifdef CONFIG_QT5
     QSoundEffect effect;
     effect.setSource(QUrl::fromLocalFile(_soundFileLine->text()));
     // Source is not set ?
@@ -397,12 +416,35 @@ void KAlarmConfigDialog::playClicked()
     {
         QMessageBox msgBox(this);
         connect(&effect, SIGNAL(playingChanged()), &msgBox, SLOT(reject()));
-        msgBox.setText(tr("Sound is playing..."));
+        msgBox.setText(playingMsg);
         msgBox.setStandardButtons(QMessageBox::Cancel);
         msgBox.exec();
     }
     else
         QMessageBox::warning(this, tr("KAlarm"), tr("Not playable"));
+#else
+    if (_soundFileLine->text().isEmpty())
+        return;
+
+    QSound sound(_soundFileLine->text());
+    sound.setLoops(1);
+    sound.play();
+
+    if (!sound.isFinished())
+    {
+        QMessageBox msgBox(this);
+        msgBox.setText(playingMsg);
+        msgBox.setStandardButtons(QMessageBox::Cancel);
+        msgBox.show();
+
+        // FIXME: Avoid polling and time consumption loop. Use event loop.
+        while (!sound.isFinished() && msgBox.isVisible())
+        {
+            QApplication::processEvents();
+            Sleep::msleep(10);
+        }
+    }
+#endif
 }
 
 void KAlarmConfigDialog::browseClicked()

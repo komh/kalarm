@@ -27,7 +27,11 @@
 
 #include <QDialog>
 
+#ifdef CONFIG_QT5
 #include <QtWidgets>
+#else
+#include <QtGui>
+#endif
 
 class KAlarmConfigDialog : public QDialog
 {
