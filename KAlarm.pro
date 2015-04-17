@@ -32,6 +32,11 @@ RESOURCES += \
     kalarm.qrc
 
 win32: RC_ICONS = kalarm_win32.ico
+os2: RC_FILE = kalarm_os2.rc
 
 DISTFILES += \
     kalarm_win32.ico
+
+OTHER_FILES += \
+    kalarm_os2.rc \
+    kalarm_os2.ico
