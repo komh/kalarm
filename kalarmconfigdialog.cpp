@@ -454,8 +454,8 @@ void KAlarmConfigDialog::playClicked()
 void KAlarmConfigDialog::browseClicked()
 {
     QStringList filters;
-    filters << "WAV files (*.wav)";
-    filters << "All files (*)";
+    filters << tr("WAV files (*.wav)");
+    filters << tr("All files (*)");
 
     QSettings settings;
 
@@ -486,8 +486,8 @@ void KAlarmConfigDialog::execProgramStateChanged(int state)
 void KAlarmConfigDialog::execProgramNameBrowseClicked()
 {
     QStringList filters;
-    filters << "Executable files (*.exe; *.cmd; *.btm; *.com; *.bat)";
-    filters << "All files (*)";
+    filters << tr("Executable files (*.exe; *.cmd; *.btm; *.com; *.bat)");
+    filters << tr("All files (*)");
 
     QSettings settings;
 
