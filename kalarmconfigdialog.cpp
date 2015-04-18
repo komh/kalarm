@@ -41,9 +41,11 @@ KAlarmConfigDialog::KAlarmConfigDialog(QWidget *parent, Qt::WindowFlags f)
     _nameLine = new QLineEdit(tr("Alarm"));
     _startTimeLabel = new QLabel(tr("Start time:"));
     _startTimeEdit = new QTimeEdit(QTime::currentTime());
+    _startTimeEdit->setDisplayFormat("HH:mm");
     _useIntervalCheck = new QCheckBox(tr("Use interval alarm"));
     _intervalTimeLabel = new QLabel(tr("Interval time:"));
     _intervalTimeEdit = new QTimeEdit;
+    _intervalTimeEdit->setDisplayFormat("HH:mm");
 
     _mondayCheck = new QCheckBox(tr("MON"));
     _tuesdayCheck= new QCheckBox(tr("TUE"));
