@@ -135,8 +135,22 @@ bool KAlarm::event(QEvent *e)
 
 void KAlarm::closeEvent(QCloseEvent *e)
 {
-    hide();
-    e->ignore();
+    if (QSystemTrayIcon::isSystemTrayAvailable())
+    {
+        // Prevent K Alarm from quitting when an alarm window opened after
+        // a main window was hidden, is closed.
+        QApplication::setQuitOnLastWindowClosed(false);
+
+        hide();
+        e->ignore();
+
+        return;
+    }
+
+    // If all visible window are closed, then quit K Alarm.
+    QApplication::setQuitOnLastWindowClosed(true);
+
+    QMainWindow::closeEvent(e);
 }
 
 static void configDialogToItemWidget(const KAlarmConfigDialog &configDialog,

@@ -43,8 +43,6 @@ int main(int argc, char *argv[])
     icon.addFile(":/icons/candy_clock_256.png");
     QApplication::setWindowIcon(icon);
 
-    QApplication::setQuitOnLastWindowClosed(false);
-
     // Load translations
     QStringList qmDirList;
     qmDirList << "."
