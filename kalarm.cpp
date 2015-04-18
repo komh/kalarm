@@ -96,8 +96,6 @@ KAlarm::KAlarm(QWidget *parent) :
     _trayIcon->show();
 
     loadAlarmItems();
-
-    setWindowTitle(title());
 }
 
 KAlarm::~KAlarm()
