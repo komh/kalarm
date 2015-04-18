@@ -24,6 +24,8 @@
 
 #include "kalarmconfigdialog.h"
 
+#include "kalarm.h"
+
 #ifdef CONFIG_QT5
 #include <QtWidgets>
 #include <QSoundEffect>
@@ -421,7 +423,7 @@ void KAlarmConfigDialog::playClicked()
         msgBox.exec();
     }
     else
-        QMessageBox::warning(this, tr("KAlarm"), tr("Not playable"));
+        QMessageBox::warning(this, KAlarm::title(), tr("Not playable"));
 #else
     if (_soundFileLine->text().isEmpty())
         return;

@@ -353,11 +353,11 @@ void KAlarm::loadAlarmItems()
 
 void KAlarm::about()
 {
-    QMessageBox::about( this, tr("About K Alarm"), tr(
+    QMessageBox::about( this, tr("About %1").arg(title()), tr(
 "<h2>%1 %2</h2>"
 "<p>Copyright &copy; 2015 by %3 "
 "<a href=mailto:komh@chollian.net>&lt;komh@chollian.net&gt;</a>"
-"<p>K Alarm is a program to alarm one time, at regular intervals or weekly."
+"<p>%1 is a program to alarm one time, at regular intervals or weekly."
 "<p>If you want to promote to develop this program, then donate at the below "
 "web page, please."
 "<p align=center><a href=http://www.ecomstation.co.kr/komh/donate.html>"
