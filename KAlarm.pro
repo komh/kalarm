@@ -31,6 +31,14 @@ FORMS    += kalarm.ui
 RESOURCES += \
     kalarm.qrc
 
+TRANSLATIONS = translations/kalarm_ko.ts
+
+lrelease.input = TRANSLATIONS
+lrelease.output = ${OBJECTS_DIR}/${QMAKE_FILE_BASE}.qm
+lrelease.commands = lrelease ${QMAKE_FILE_IN} -qm ${QMAKE_FILE_OUT}
+lrelease.CONFIG += no_link target_predeps
+QMAKE_EXTRA_COMPILERS += lrelease
+
 win32: RC_ICONS = kalarm_win32.ico
 os2: RC_FILE = kalarm_os2.rc
 

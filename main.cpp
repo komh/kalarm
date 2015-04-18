@@ -45,6 +45,25 @@ int main(int argc, char *argv[])
 
     QApplication::setQuitOnLastWindowClosed(false);
 
+    // Load translations
+    QStringList qmDirList;
+    qmDirList << "."
+              << "debug"
+              << "release";
+
+    QString qmName("kalarm_" + QLocale::system().name());
+
+    QTranslator kalarmTrans;
+    foreach(QString qmDir, qmDirList)
+    {
+        if (kalarmTrans.load(qmName, qmDir) ||
+                kalarmTrans.load(qmName, qmDir + "/translations"))
+        {
+            a.installTranslator(&kalarmTrans);
+            break;
+        }
+    }
+
     KAlarm w;
     w.show();
 
