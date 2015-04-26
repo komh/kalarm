@@ -1,0 +1,250 @@
+                                K Alarm v1.0.0
+                               ----------------
+
+1. Introduction
+---------------
+  
+  This program is to alarm one time, at regular intervals or weekly.
+
+  This program performs the following features on alarm.
+  
+    - Showing a message window
+
+    - Playing a sound file
+    
+    - Executing a program
+    
+2. Development Environment
+--------------------------
+  
+  - OS/2 Warp v4 for Korean with FixPak #15
+  
+  - GCC v4.9.2
+
+  - OS/2 ToolKit v4.5
+  
+  - GNU Make v3.81r3
+
+  - Qt v4.7.3GA2  
+  
+  - Qt Creator v2.2.1
+  
+  - git v1.8.5.2
+      
+3. Requirements
+---------------
+
+  - Runtime : kLIBC v0.6.6, Qt v4.7.3GA2
+
+4. Test Environment
+--------------------
+
+  This program is tested on OS/2 Warp v4 for Korean with FixPak #15 and
+eComStation 2.1.
+
+5. Installation
+---------------
+
+  Put kalarm.exe into any directory. If you need translations, copy *.qm in 
+translations directory into the directory where kalarm.exe exists or the 
+translations directory of the directory where kalarm.exe exists.
+
+6. Usage
+--------
+
+6.1 Menu
+--------
+
+6.1.1 File - New alarm...
+-------------------------
+
+  Create a new alarm.
+  
+6.1.2 File - Exit
+-----------------
+
+  K Alarm exists.
+  
+6.1.3 Help - About K Alarm...
+-----------------------------
+
+  Show informations about K Alarm.
+
+6.1.4 Help - About Qt...
+------------------------
+
+  Show informations about Qt used by K Alarm.
+
+6.2 Buttons
+-----------
+
+6.2.1 Add
+---------
+
+  Add a new alarm.
+
+6.2.2 Modify
+------------
+
+  Modify an selected alarm.
+
+6.2.3 Delete
+------------
+
+  Delete an selected alarm.
+
+6.2.4 Close on title bar
+------------------------
+
+  Quit a program unless a tray icon is availble. Otherwise, K Alarm is hidden 
+instead of quitting. To quit K Alarm, use [File - Exit] or [Tray icon - Exit].
+
+6.3 Hot keys
+------------------
+
+6.3.1 Insert
+------------
+
+  Add a new alarm.
+        
+6.3.2 Delete
+------------
+
+  Delete a selected alarm.
+  
+6.4 Tray icon
+-------------
+  
+  Tray icon is shown if Extended system tray is registered at XCenter.
+
+6.4.1 Double-click
+------------------
+
+  Show K Alarm.
+  
+6.4.2 Right-button click
+------------------------
+
+  Show a popup-menu.
+
+6.4.2.1 Open K Alarm...
+-----------------------
+
+  Show K Alarm.
+  
+6.4.2.2 Help - About K Alarm...
+-------------------------------
+
+  Show informations for K Alarm.
+  
+6.4.2.3 Help - About Qt...
+--------------------------
+
+  Show informations for Qt used by K Alarm.
+
+6.4.2.4 Exit
+------------
+
+  K Alarm exits.
+
+7. Limitations/Known bugs
+-----------------------------
+
+  - See https://github.com/komh/kalarm/issues 
+  
+8. TODOs...
+-----------
+
+  - See https://github.com/komh/kalarm/issues
+  
+9. History
+----------
+
+  - 1.0.0 ( 2015/04/25 )
+    .First release
+      
+10. Compilation
+---------------
+
+10.1 Requirements...
+--------------------
+
+  - gcc v4.9.2
+
+  - OS/2 ToolKit v4.5
+  
+  - GNU Make v3.81r3
+  
+  - Qt 4.7.3GA2
+  
+  - Qt Creator v2.2.1
+  
+  - git v1.8.5.2
+
+10.2 How to Download the sources
+--------------------------------
+
+  The following git repository is provided,
+  
+      git://github.com/komh/kalarm.git
+      
+  To download the sources, do like below.
+    
+      git clone git://github.com/komh/kalarm.git
+      
+  To update,
+  
+      git pull
+
+10.3 How to compile
+-------------------
+  
+  If you get the sources, then execute qmake.
+  
+      qmake
+      
+  After qmake completes, execute make.
+  
+      make
+      
+  Then you can get kalarm.exe.
+
+  If you want to use Qt Creator, then execute Qt Creator and open kalarm.pro. 
+And build it using Ctrl-B.
+  
+11. Modules
+-----------
+
+  kalarm.exe : The executable of K Alarm
+  translations/*.qm : The translation files of K Alarm
+
+12. How to contribute
+---------------------
+
+12.1 Icon Creator
+-----------------
+
+  If you can create pretty icons for K Alarm, contact me, please.
+  
+12.2 Translator
+---------------
+
+  If you can translate the messages of K Alarm into your language, 
+contact me, please.
+  
+12.3 Donation
+------------
+
+  If you are satisfied with K Alarm and want to donate to me, please 
+visit the following URL.
+
+    http://www.ecomstation.co.kr/komh/donate.html
+
+13. Contacts
+------------
+
+  Use the issue trackers of github.
+  
+    https://github.com/komh/kalarm/issues
+                   
+KO Myung-Hun
