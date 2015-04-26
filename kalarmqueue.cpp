@@ -119,7 +119,7 @@ void KAlarmQueue::alarm(const KAlarmItemWidget *w, const QDateTime &dt)
     if (w->playSound())
     {
         sound->setLoops(-1);
-        sound->play(w->soundFile());
+        sound->play();
     }
 #endif
 
