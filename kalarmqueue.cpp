@@ -106,13 +106,13 @@ QDateTime KAlarmQueue::findNextAlarm(const KAlarmItemWidget *w,
 void KAlarmQueue::alarm(const KAlarmItemWidget *w, const QDateTime &dt)
 {
 #ifdef CONFIG_QT5
-    QSoundEffect e;
+    QSoundEffect *sound = new QSoundEffect;
     if (w->playSound())
     {
-        e.setSource(QUrl::fromLocalFile(w->soundFile()));
-        e.setLoopCount(QSoundEffect::Infinite);
-        e.setVolume(1.0f);
-        e.play();
+        sound->setSource(QUrl::fromLocalFile(w->soundFile()));
+        sound->setLoopCount(QSoundEffect::Infinite);
+        sound->setVolume(1.0f);
+        sound->play();
     }
 #else
     QSound *sound = new QSound(w->soundFile());
@@ -147,9 +147,7 @@ void KAlarmQueue::alarm(const KAlarmItemWidget *w, const QDateTime &dt)
     msgBox->setAttribute(Qt::WA_DeleteOnClose);
     msgBox->setText(text);
 
-#ifndef CONFIG_QT5
     connect(msgBox, SIGNAL(destroyed()), sound, SLOT(deleteLater()));
-#endif
 
     // Resize a message box, minimum width of 320
     QSpacerItem* hspacer = new QSpacerItem(320, 0,
