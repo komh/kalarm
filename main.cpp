@@ -44,23 +44,13 @@ int main(int argc, char *argv[])
     QApplication::setWindowIcon(icon);
 
     // Load translations
-    QStringList qmDirList;
-    qmDirList << QCoreApplication::applicationDirPath() + "/."
-              << QCoreApplication::applicationDirPath() + "/debug"
-              << QCoreApplication::applicationDirPath() + "/release";
-
     QString qmName("kalarm_" + QLocale::system().name());
-
+    QString qmDir(QCoreApplication::applicationDirPath());
     QTranslator kalarmTrans;
-    foreach(QString qmDir, qmDirList)
-    {
-        if (kalarmTrans.load(qmName, qmDir) ||
-                kalarmTrans.load(qmName, qmDir + "/translations"))
-        {
-            a.installTranslator(&kalarmTrans);
-            break;
-        }
-    }
+
+    if (kalarmTrans.load(qmName, qmDir)
+            || kalarmTrans.load(qmName, qmDir + "/translations"))
+        a.installTranslator(&kalarmTrans);
 
     KAlarm w;
     w.show();
