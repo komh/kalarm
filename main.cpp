@@ -45,9 +45,9 @@ int main(int argc, char *argv[])
 
     // Load translations
     QStringList qmDirList;
-    qmDirList << "."
-              << "debug"
-              << "release";
+    qmDirList << QCoreApplication::applicationDirPath() + "/."
+              << QCoreApplication::applicationDirPath() + "/debug"
+              << QCoreApplication::applicationDirPath() + "/release";
 
     QString qmName("kalarm_" + QLocale::system().name());
 
