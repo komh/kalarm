@@ -241,7 +241,7 @@
     <message>
         <location filename="../kalarmitemwidget.cpp" line="106"/>
         <source>%1 hour</source>
-        <translation>%1 시</translation>
+        <translation>%1 시간</translation>
     </message>
     <message>
         <location filename="../kalarmitemwidget.cpp" line="111"/>
