@@ -53,7 +53,6 @@ int main(int argc, char *argv[])
         a.installTranslator(&kalarmTrans);
 
     KAlarm w;
-    w.show();
 
     return a.exec();
 }

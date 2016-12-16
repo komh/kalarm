@@ -48,6 +48,12 @@ KAlarm::KAlarm(QWidget *parent) :
     _fileMenu->addAction(tr("E&xit"), qApp, SLOT(quit()),
                          QKeySequence(tr("Ctrl+Q")));
 
+    _viewMenu = menuBar()->addMenu(tr("&View"));
+    _showKAlarmAction = _viewMenu->addAction(tr("&Show K Alarm at startup"),
+                                             this,
+                                             SLOT(showKAlarmTriggered(bool)));
+    _showKAlarmAction->setCheckable(true);
+
     _helpMenu = menuBar()->addMenu(tr("&Help"));
     _helpMenu->addAction(tr("&About %1...").arg(title()), this, SLOT(about()));
     _helpMenu->addAction(tr("About &Qt..."), this, SLOT(aboutQt()));
@@ -96,6 +102,20 @@ KAlarm::KAlarm(QWidget *parent) :
     _trayIcon->show();
 
     loadAlarmItems();
+
+    if (_showKAlarmAction->isChecked())
+        show();
+    else
+    {
+        // Prevent from qutting K Alarm when K Alarm is hidden and an alarm
+        // window is closed.
+        QApplication::setQuitOnLastWindowClosed(false);
+
+        if (QSystemTrayIcon::isSystemTrayAvailable())
+            hide();
+        else
+            showMinimized();
+    }
 }
 
 KAlarm::~KAlarm()
@@ -321,6 +341,13 @@ void KAlarm::itemWidgetAlarmEnabledToggled(bool enabled)
     }
 }
 
+void KAlarm::showKAlarmTriggered(bool checked) const
+{
+    QSettings settings;
+
+    settings.setValue("ShowKAlarm", checked);
+}
+
 void KAlarm::saveAlarmItems() const
 {
     QSettings settings;
@@ -342,6 +369,8 @@ void KAlarm::loadAlarmItems()
     QSettings settings;
 
     restoreGeometry(settings.value("MainWindowGeometry").toByteArray());
+
+    _showKAlarmAction->setChecked(settings.value("ShowKAlarm", true).toBool());
 
     int count = settings.value("AlarmCount").toInt();
     for (int i = 0; i < count; ++i)

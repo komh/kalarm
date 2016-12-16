@@ -62,6 +62,8 @@ private:
     KAlarmQueue _alarmQueue;
 
     QMenu *_fileMenu;
+    QMenu *_viewMenu;
+    QAction *_showKAlarmAction;
     QMenu *_helpMenu;
 
     QMenu *_trayIconMenu;
@@ -73,6 +75,8 @@ private slots:
     void deleteItem();
 
     void itemWidgetAlarmEnabledToggled(bool enabled);
+
+    void showKAlarmTriggered(bool checked) const;
 
     void saveAlarmItems() const;
     void loadAlarmItems();
