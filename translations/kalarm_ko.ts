@@ -21,7 +21,7 @@
     </message>
     <message>
         <location filename="../kalarm.cpp" line="48"/>
-        <location filename="../kalarm.cpp" line="81"/>
+        <location filename="../kalarm.cpp" line="87"/>
         <source>E&amp;xit</source>
         <translation>끝내기(&amp;x)</translation>
     </message>
@@ -32,46 +32,56 @@
     </message>
     <message>
         <location filename="../kalarm.cpp" line="51"/>
+        <source>&amp;View</source>
+        <translation>보기(&amp;V)</translation>
+    </message>
+    <message>
+        <location filename="../kalarm.cpp" line="52"/>
+        <source>&amp;Show K Alarm at startup</source>
+        <translation>시작할 때 K Alarm 보기(&amp;S)</translation>
+    </message>
+    <message>
+        <location filename="../kalarm.cpp" line="57"/>
         <source>&amp;Help</source>
         <translation>도움말(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../kalarm.cpp" line="52"/>
+        <location filename="../kalarm.cpp" line="58"/>
         <source>&amp;About %1...</source>
         <translation>%1 정보(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="../kalarm.cpp" line="53"/>
+        <location filename="../kalarm.cpp" line="59"/>
         <source>About &amp;Qt...</source>
         <translation>&amp;Qt 정보...</translation>
     </message>
     <message>
-        <location filename="../kalarm.cpp" line="55"/>
+        <location filename="../kalarm.cpp" line="61"/>
         <source>&amp;Add</source>
         <translation>추가(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../kalarm.cpp" line="56"/>
+        <location filename="../kalarm.cpp" line="62"/>
         <source>&amp;Modify</source>
         <translation>수정(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../kalarm.cpp" line="57"/>
+        <location filename="../kalarm.cpp" line="63"/>
         <source>&amp;Delete</source>
         <translation>삭제(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../kalarm.cpp" line="77"/>
+        <location filename="../kalarm.cpp" line="83"/>
         <source>&amp;Open %1...</source>
         <translation>%1 열기(&amp;O)...</translation>
     </message>
     <message>
-        <location filename="../kalarm.cpp" line="368"/>
+        <location filename="../kalarm.cpp" line="397"/>
         <source>About %1</source>
         <translation>%1 정보</translation>
     </message>
     <message>
-        <location filename="../kalarm.cpp" line="368"/>
+        <location filename="../kalarm.cpp" line="397"/>
         <source>&lt;h2&gt;%1 %2&lt;/h2&gt;&lt;p&gt;Copyright &amp;copy; 2015 by %3 &lt;a href=mailto:komh@chollian.net&gt;&amp;lt;komh@chollian.net&amp;gt;&lt;/a&gt;&lt;p&gt;%1 is a program to alarm one time, at regular intervals or weekly.&lt;p&gt;If you want to promote to develop this program, then donate at the below web page, please.&lt;p align=center&gt;&lt;a href=http://www.ecomstation.co.kr/komh/donate.html&gt;http://www.ecomstation.co.kr/komh/donate.html&lt;/a&gt;&lt;p&gt;This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions. See &lt;a href=http://www.gnu.org/licenses/gpl.html&gt;the GPL v3 license&lt;/a&gt; for details.</source>
         <translation>&lt;h2&gt;%1 %2&lt;/h2&gt;&lt;p&gt;저작권 &amp;copy; 2015 %3 &lt;a href=mailto:komh@chollian.net&gt;&amp;lt;komh@chollian.net&amp;gt;&lt;/a&gt;&lt;p&gt;%1 은 한 번만 혹은 일정 시간마다 또는 매주 알람을 울리는 프로그램입니다.&lt;p&gt;이 프로그램의 개발을 후원하고 싶으시면, 아래 웹페이지에서 기부해 주시면 고맙겠습니다.&lt;p align=center&gt;&lt;a href=http://www.ecomstation.co.kr/komh/donate.html&gt;http://www.ecomstation.co.kr/komh/donate.html&lt;/a&gt;&lt;p&gt;이 프로그램은 품질을 보증하지 않습니다. 이것은 자유소프트웨어이며, 당신은 특정한 조건 하에 얼마든지 이것을 재배포할 수 있습니다. 자세한 것은 &lt;a href=http://www.gnu.org/licenses/gpl.html&gt;the GPL v3 license&lt;/a&gt; 를 보십시오..</translation>
     </message>
@@ -200,38 +210,38 @@
         <translation>알람일 때</translation>
     </message>
     <message>
-        <location filename="../kalarmconfigdialog.cpp" line="173"/>
+        <location filename="../kalarmconfigdialog.cpp" line="175"/>
         <source>Please specify a name.</source>
         <translation>이름을 적어 주십시오.</translation>
     </message>
     <message>
-        <location filename="../kalarmconfigdialog.cpp" line="179"/>
+        <location filename="../kalarmconfigdialog.cpp" line="181"/>
         <source>Please set an interval time(00:00 is not allowed).</source>
         <translation>시간 간격을 설정해 주십시오(00:00 은 쓸 수 없습니다).</translation>
     </message>
     <message>
-        <location filename="../kalarmconfigdialog.cpp" line="401"/>
+        <location filename="../kalarmconfigdialog.cpp" line="413"/>
         <source>Playing sound...</source>
         <translation>소리를 재생하고 있습니다...</translation>
     </message>
     <message>
-        <location filename="../kalarmconfigdialog.cpp" line="428"/>
+        <location filename="../kalarmconfigdialog.cpp" line="440"/>
         <source>Not playable</source>
         <translation>재생할 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../kalarmconfigdialog.cpp" line="457"/>
+        <location filename="../kalarmconfigdialog.cpp" line="469"/>
         <source>WAV files (*.wav)</source>
         <translation>WAV 파일(*.wav)</translation>
     </message>
     <message>
-        <location filename="../kalarmconfigdialog.cpp" line="458"/>
-        <location filename="../kalarmconfigdialog.cpp" line="490"/>
+        <location filename="../kalarmconfigdialog.cpp" line="470"/>
+        <location filename="../kalarmconfigdialog.cpp" line="502"/>
         <source>All files (*)</source>
         <translation>모든 파일(*)</translation>
     </message>
     <message>
-        <location filename="../kalarmconfigdialog.cpp" line="489"/>
+        <location filename="../kalarmconfigdialog.cpp" line="501"/>
         <source>Executable files (*.exe; *.cmd; *.btm; *.com; *.bat)</source>
         <translation>실행 파일 (*.exe; *.cmd; *.btm; *.com; *.bat)</translation>
     </message>
