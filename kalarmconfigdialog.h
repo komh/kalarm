@@ -124,6 +124,7 @@ private:
 
 private slots:
     void useIntervalStateChanged(int state);
+    void showAlarmWindowStateChanged(int state);
     void useSoundStateChanged(int state);
     void playClicked();
     void browseClicked();

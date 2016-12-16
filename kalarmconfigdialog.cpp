@@ -145,6 +145,8 @@ KAlarmConfigDialog::KAlarmConfigDialog(QWidget *parent, Qt::WindowFlags f)
     // Connect signals
     connect(_useIntervalCheck, SIGNAL(stateChanged(int)),
             this, SLOT(useIntervalStateChanged(int)));
+    connect(_showAlarmWindowCheck, SIGNAL(stateChanged(int)),
+            this, SLOT(showAlarmWindowStateChanged(int)));
     connect(_playSoundCheck, SIGNAL(stateChanged(int)),
             this, SLOT(useSoundStateChanged(int)));
     connect(_soundPlayPush, SIGNAL(clicked()), this, SLOT(playClicked()));
@@ -375,6 +377,13 @@ void KAlarmConfigDialog::useIntervalStateChanged(int state)
     }
 }
 
+void KAlarmConfigDialog::showAlarmWindowStateChanged(int state)
+{
+    if (state == Qt::Unchecked && _playSoundCheck->isChecked())
+        QMetaObject::invokeMethod(_showAlarmWindowCheck, "setChecked",
+                                  Qt::QueuedConnection, Q_ARG(bool, true));
+}
+
 void KAlarmConfigDialog::useSoundStateChanged(int state)
 {
     bool enabled = state == Qt::Checked;
@@ -382,6 +391,9 @@ void KAlarmConfigDialog::useSoundStateChanged(int state)
     _soundFileLine->setEnabled(enabled);
     _soundPlayPush->setEnabled(enabled);
     _soundFileBrowsePush->setEnabled(enabled);
+
+    if (enabled && !_showAlarmWindowCheck->isChecked())
+        _showAlarmWindowCheck->setChecked(true);
 }
 
 #ifndef CONFIG_QT5
