@@ -129,6 +129,13 @@ void KAlarmQueue::alarm(const KAlarmItemWidget *w, const QDateTime &dt)
                                 w->execProgramParams());
     }
 
+    if (!w->showAlarmWindow())
+    {
+        delete sound;
+
+        return;
+    }
+
     QString text;
     text.append("<p align=center>");
 
